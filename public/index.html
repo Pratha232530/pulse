@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseSocial — Next-Gen Social Media</title>
+  <meta name="description" content="Connect, share ideas, follow creators, and discover trending posts on PulseSocial.">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- App Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Background Glow FX -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <!-- App Header / Top Mobile Bar -->
+  <header class="mobile-header">
+    <div class="brand">
+      <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+      <span class="brand-name">Pulse</span>
+    </div>
+    <div class="mobile-actions">
+      <button id="mobile-search-btn" class="icon-btn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <div id="mobile-user-avatar" class="avatar-small hidden"></div>
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar-left">
+      <div class="brand-wrapper">
+        <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+        <span class="brand-name">Pulse<span class="brand-dot">.</span></span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#" class="nav-item active" id="nav-home" data-view="feed">
+          <i class="fa-solid fa-house"></i>
+          <span>Home Feed</span>
+        </a>
+        <a href="#" class="nav-item" id="nav-explore" data-view="explore">
+          <i class="fa-solid fa-compass"></i>
+          <span>Explore</span>
+        </a>
+        <a href="#" class="nav-item" id="nav-following" data-view="following">
+          <i class="fa-solid fa-user-group"></i>
+          <span>Following</span>
+        </a>
+        <a href="#" class="nav-item" id="nav-profile" data-view="profile">
+          <i class="fa-solid fa-user"></i>
+          <span>My Profile</span>
+        </a>
+      </nav>
+
+      <button id="sidebar-post-btn" class="btn btn-primary btn-block btn-lg">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>Create Post</span>
+      </button>
+
+      <!-- Logged In User Footer Card -->
+      <div id="user-nav-card" class="user-nav-card">
+        <div class="user-nav-info">
+          <img id="nav-user-avatar" src="" alt="User Avatar" class="avatar-sm">
+          <div class="user-nav-meta">
+            <span id="nav-user-name" class="user-name">Guest User</span>
+            <span id="nav-user-handle" class="user-handle">@guest</span>
+          </div>
+        </div>
+        <button id="auth-action-btn" class="icon-btn" title="Login / Logout">
+          <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- CENTER FEED & CONTENT VIEW -->
+    <main class="main-content">
+      
+      <!-- Sticky Feed Header -->
+      <header class="content-header" id="content-header">
+        <div class="header-title-wrapper">
+          <h1 id="page-title">Home Feed</h1>
+          <p id="page-subtitle" class="subtitle">Latest updates from the community</p>
+        </div>
+        
+        <!-- Search Input -->
+        <div class="search-bar-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="feed-search-input" placeholder="Search posts or creators..." autocomplete="off">
+          <button id="clear-search-btn" class="clear-search hidden"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </header>
+
+      <!-- Feed Filter Tabs -->
+      <div class="feed-tabs" id="feed-tabs">
+        <button class="feed-tab active" data-tab="all">Discover All</button>
+        <button class="feed-tab" data-tab="following">Following Feed</button>
+      </div>
+
+      <!-- INLINE POST COMPOSER -->
+      <section class="composer-card" id="composer-card">
+        <div class="composer-header">
+          <img id="composer-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop&q=80" alt="Your Avatar" class="avatar-sm">
+          <div class="composer-input-wrapper">
+            <textarea id="post-input-text" placeholder="What's happening in your world?" rows="3"></textarea>
+          </div>
+        </div>
+        
+        <!-- Image URL attachment row -->
+        <div id="image-url-row" class="image-url-row hidden">
+          <i class="fa-solid fa-image input-icon"></i>
+          <input type="url" id="post-image-url" placeholder="Paste image URL (e.g. https://images.unsplash.com/...)" />
+          <button id="remove-image-url" class="icon-btn danger"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div id="composer-image-preview" class="composer-image-preview hidden">
+          <img id="preview-img" src="" alt="Preview">
+        </div>
+
+        <div class="composer-actions">
+          <div class="composer-tools">
+            <button id="add-image-btn" class="tool-btn" title="Add Image URL">
+              <i class="fa-regular fa-image"></i>
+              <span>Attach Image</span>
+            </button>
+          </div>
+          <button id="publish-post-btn" class="btn btn-primary">
+            <span>Post</span>
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- USER PROFILE HEADER CONTAINER (Shown when viewing profile) -->
+      <div id="profile-container" class="profile-container hidden">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- POSTS FEED CONTAINER -->
+      <section class="posts-feed" id="posts-feed">
+        <!-- Dynamic Post Cards Injected Here -->
+        <div class="feed-loading">
+          <div class="spinner"></div>
+          <p>Loading community posts...</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- RIGHT SIDEBAR WIDGETS -->
+    <aside class="sidebar-right">
+      
+      <!-- Quick Demo Login Panel -->
+      <div class="widget-card demo-accounts-widget">
+        <div class="widget-header">
+          <i class="fa-solid fa-user-astronaut text-accent"></i>
+          <h3>Quick Demo Logins</h3>
+        </div>
+        <p class="widget-desc">Click any persona to log in instantly and test features:</p>
+        <div class="demo-users-list">
+          <button class="demo-user-chip" data-user="alex_design">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" alt="Alex">
+            <div class="chip-info">
+              <span class="chip-name">Alex Rivera</span>
+              <span class="chip-handle">@alex_design</span>
+            </div>
+          </button>
+          <button class="demo-user-chip" data-user="sophia_tech">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" alt="Sophia">
+            <div class="chip-info">
+              <span class="chip-name">Sophia Chen</span>
+              <span class="chip-handle">@sophia_tech</span>
+            </div>
+          </button>
+          <button class="demo-user-chip" data-user="marcus_dev">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" alt="Marcus">
+            <div class="chip-info">
+              <span class="chip-name">Marcus Vance</span>
+              <span class="chip-handle">@marcus_dev</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Suggested Creators Widget -->
+      <div class="widget-card suggested-widget">
+        <div class="widget-header">
+          <i class="fa-solid fa-user-plus text-accent"></i>
+          <h3>Who to Follow</h3>
+        </div>
+        <div id="suggested-users-list" class="suggested-list">
+          <div class="widget-skeleton">Loading creators...</div>
+        </div>
+      </div>
+
+      <!-- Trending Hashtags Widget -->
+      <div class="widget-card trending-widget">
+        <div class="widget-header">
+          <i class="fa-solid fa-fire text-accent"></i>
+          <h3>Trending Topics</h3>
+        </div>
+        <ul class="trending-list">
+          <li class="trending-item">
+            <span class="hashtag">#UIUX</span>
+            <span class="post-count">1.4k posts</span>
+          </li>
+          <li class="trending-item">
+            <span class="hashtag">#ArtificialIntelligence</span>
+            <span class="post-count">3.8k posts</span>
+          </li>
+          <li class="trending-item">
+            <span class="hashtag">#NodeJS</span>
+            <span class="post-count">920 posts</span>
+          </li>
+          <li class="trending-item">
+            <span class="hashtag">#Photography</span>
+            <span class="post-count">2.1k posts</span>
+          </li>
+        </ul>
+      </div>
+      
+      <footer class="app-footer">
+        <p>&copy; 2026 PulseSocial. Crafted with Vanilla JS, HTML, CSS & Express.</p>
+      </footer>
+    </aside>
+
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <button class="modal-close" id="auth-modal-close"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="auth-header">
+        <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h2>Welcome to Pulse</h2>
+        <p class="auth-subtitle">Join the social network built for creators and developers.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="tab-login-btn" class="auth-tab active">Log In</button>
+        <button id="tab-signup-btn" class="auth-tab">Create Account</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-username">Username or Email</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="login-username" placeholder="e.g. alex_design" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="login-password" placeholder="••••••••" required>
+          </div>
+        </div>
+        <div id="login-error" class="form-error hidden"></div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Log In</button>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form id="signup-form" class="auth-form hidden">
+        <div class="form-group">
+          <label for="signup-fullname">Full Name</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-id-card"></i>
+            <input type="text" id="signup-fullname" placeholder="Alex Rivera" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="signup-username">Username</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-at"></i>
+              <input type="text" id="signup-username" placeholder="alex_dev" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" id="signup-email" placeholder="alex@example.com" required>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="signup-password" placeholder="Min 6 characters" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="signup-bio">Bio (Optional)</label>
+          <input type="text" id="signup-bio" placeholder="Tell the world what you do...">
+        </div>
+        <div id="signup-error" class="form-error hidden"></div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div id="edit-profile-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <button class="modal-close" id="edit-profile-close"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-header">
+        <h3>Edit Profile</h3>
+      </div>
+      <form id="edit-profile-form">
+        <div class="form-group">
+          <label for="edit-fullname">Full Name</label>
+          <input type="text" id="edit-fullname" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-bio">Bio</label>
+          <textarea id="edit-bio" rows="3" placeholder="Share your bio..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="edit-avatar">Avatar Image URL</label>
+          <input type="url" id="edit-avatar" placeholder="https://images.unsplash.com/...">
+        </div>
+        <div class="form-group">
+          <label for="edit-cover">Cover Banner URL</label>
+          <input type="url" id="edit-cover" placeholder="https://images.unsplash.com/...">
+        </div>
+        <div id="edit-profile-error" class="form-error hidden"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="edit-profile-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- USER LIST MODAL (Followers / Following) -->
+  <div id="user-list-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <button class="modal-close" id="user-list-close"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-header">
+        <h3 id="user-list-title">Followers</h3>
+      </div>
+      <div id="user-list-content" class="user-list-content">
+        <!-- List injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- App Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
