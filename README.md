@@ -1,4 +1,4 @@
-# ⚡ NEXUS (PulseSocial)
+# ⚡ Pulse (PulseSocial)
 
 > A modern, full-stack, glassmorphic social media platform built with Express.js, SQLite3, JWT Authentication, and Vanilla JS/CSS.
 
@@ -12,7 +12,7 @@
 
 ## 🌟 Overview
 
-**NEXUS** (PulseSocial) is a lightweight, high-performance social networking platform featuring a dark-themed glassmorphic user interface, real-time feed filtering, user follow relationships, post creation with rich media, interactive likes, and comment threads. 
+**Pulse** (PulseSocial) is a lightweight, high-performance social networking platform featuring a dark-themed glassmorphic user interface, real-time feed filtering, user follow relationships, post creation with rich media, interactive likes, and comment threads. 
 
 The application requires zero external database configuration — powered by an embedded SQLite3 database that initializes and seeds rich demonstration data automatically upon first startup.
 
